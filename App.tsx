@@ -1,23 +1,38 @@
-import React from"react"
+import React, { useState } from"react"
 
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import CustomTitle from "./src/components/atoms/CustomTitle";
 import { useEffect } from "react";
 import { getService } from "./src/utils/getService";
+import CategoryForm from "./src/components/organisms/CategoryForm";
 
 export default function App() {
+
+  const [number, setNumber] = useState<number>(0)
+
+  console.log("Renderizado")
+
+  const suma = () => {
+    return number+1
+  }
+
+  const restar = () => {
+    return number-1
+  }
 
   useEffect(() => {
     getService()
   
   }, [])
   
-  let num:Number= 123;
-  return (
+    return (
     <View style={styles.container}>
-      <CustomTitle titlee={num.toString()}/>
+      <CustomTitle title="CREAR CATEGORIA"/>
       <StatusBar style="auto" />
+      <CategoryForm></CategoryForm>
+      
+    
     </View>
   );
 }
