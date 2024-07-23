@@ -1,4 +1,4 @@
-import React, { useState } from"react"
+import React, { useState } from "react"
 
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View } from 'react-native';
@@ -6,6 +6,7 @@ import CustomTitle from "./src/components/atoms/CustomTitle";
 import { useEffect } from "react";
 import { getService } from "./src/utils/getService";
 import CategoryForm from "./src/components/organisms/CategoryForm";
+import Routes from "./src/routes/Routes";
 
 export default function App() {
 
@@ -14,25 +15,23 @@ export default function App() {
   console.log("Renderizado")
 
   const suma = () => {
-    return number+1
+    return number + 1
   }
 
   const restar = () => {
-    return number-1
+    return number - 1
   }
 
   useEffect(() => {
     getService()
-  
+
   }, [])
-  
-    return (
+
+  return (
     <View style={styles.container}>
-      <CustomTitle title="CREAR CATEGORIA"/>
-      <StatusBar style="auto" />
-      <CategoryForm></CategoryForm>
-      
-    
+      <Routes />
+
+
     </View>
   );
 }
