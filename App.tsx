@@ -6,7 +6,7 @@ import CustomTitle from "./src/components/atoms/CustomTitle";
 import { useEffect } from "react";
 import { getService } from "./src/utils/getService";
 import CategoryForm from "./src/components/organisms/CategoryForm";
-import Routes from "./src/routes/Routes";
+import Routes from "./src/Routes/Routes";
 
 export default function App() {
 
