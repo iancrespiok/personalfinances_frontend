@@ -1,10 +1,34 @@
-export const getService = () => {
-    fetch("http://localhost:8080/getCategories", {method: "GET"})  
-        .then(response => response.json())
-        .then((res)=>{
-            console.log(res)
-        })
-        .catch((err)=>{
-            console.log(err)
-        })
-}
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+export const getToken = async () => {
+  try {
+    const token = await AsyncStorage.getItem("userToken");
+    return token;
+  } catch (error) {
+    return false;
+  }
+};
+export const getService = async () => {
+  // Obtener el token
+
+  const token = await getToken();
+  console.log(token);
+  try {
+    const response = await fetch("http://localhost:8080/getCategories", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`, // Agrega el token Bearer aquí
+        "Content-Type": "application/json", // Puedes agregar otros headers si es necesario
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.log("Error:", error);
+  }
+};
