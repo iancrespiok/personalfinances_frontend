@@ -8,13 +8,14 @@ export const getToken = async () => {
     return false;
   }
 };
-export const getService = async () => {
+export const getService = async (endpoint: string) => {
   // Obtener el token
-
+  const urlBase = "http://localhost:8080/";
+  const url = urlBase + endpoint;
   const token = await getToken();
-  console.log(token);
+  console.log(token, " soy el tokcen");
   try {
-    const response = await fetch("http://localhost:8080/getCategories", {
+    const response = await fetch(url, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`, // Agrega el token Bearer aquí

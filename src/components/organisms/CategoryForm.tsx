@@ -10,23 +10,23 @@ const CategoryForm = () => {
 
     const handleName = (e: any) => {
         const value = e.target.value
-        setFormValues({...formValues,name: value})
+        setFormValues({ ...formValues, name: value })
     }
 
     const handleDescription = (e: any) => {
         const value = e.target.value
-        setFormValues({...formValues,description: value})
+        setFormValues({ ...formValues, description: value })
     }
-  
+
     const handleButton = () => {
         console.log(formValues)
-        postService(formValues)
+        postService(formValues, 'createCategory')
     }
 
     return (
         <View>
-            <TextInput onChange={(e) => {handleName(e)}} style={{backgroundColor: "red"}}></TextInput>
-            <TextInput onChange={(e) => {handleDescription(e)}} style={{backgroundColor: "blue"}}></TextInput>
+            <TextInput onChange={(e) => { handleName(e) }} style={{ backgroundColor: "red" }}></TextInput>
+            <TextInput onChange={(e) => { handleDescription(e) }} style={{ backgroundColor: "blue" }}></TextInput>
             <Button onPress={() => handleButton()} title='CREAR'></Button>
         </View>
     )

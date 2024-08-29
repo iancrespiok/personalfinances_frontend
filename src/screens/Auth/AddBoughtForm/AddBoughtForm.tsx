@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet } from 'react-native';
 import axios from 'axios';
-import { postAuthService } from '../../../utils/postService';
-import { useNavigation } from '@react-navigation/native';
-import { storeToken } from '../Login/Login';
 
-const Register = () => {
-    const navigation = useNavigation()
+interface props {
 
+}
+
+const AddBoughtForm = () => {
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -22,18 +21,11 @@ const Register = () => {
         });
     };
 
-
-    const handleNavigate = (route: string) => {
-        navigation.navigate(route);
-    }
-
     const handleSubmit = async () => {
         try {
-            const response = await postAuthService(formData, 'user/register');
+            const response = await axios.post('http://localhost:8080/user/register', formData);
             Alert.alert('Success', 'User registered successfully!');
-            console.log('Response:', response.jwt, ' soy el tikce');
-            storeToken(response.jwt)
-            handleNavigate("Home");
+            console.log('Response:', response.data);
             // Maneja la respuesta aquí, como redireccionar o limpiar el formulario
         } catch (error) {
             Alert.alert('Error', 'Something went wrong!');
@@ -44,21 +36,21 @@ const Register = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.label}>First Name:</Text>
+            <Text style={styles.label}>Description</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Enter your first name"
                 value={formData.firstName}
                 onChangeText={(value) => handleChange('firstName', value)}
             />
-            <Text style={styles.label}>Last Name:</Text>
+            <Text style={styles.label}>Amount</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Enter your last name"
                 value={formData.lastName}
                 onChangeText={(value) => handleChange('lastName', value)}
             />
-            <Text style={styles.label}>Email:</Text>
+            <Text style={styles.label}>CategoryID</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Enter your email"
@@ -66,7 +58,15 @@ const Register = () => {
                 value={formData.email}
                 onChangeText={(value) => handleChange('email', value)}
             />
-            <Text style={styles.label}>Password:</Text>
+            <Text style={styles.label}>Installments</Text>
+            <TextInput
+                style={styles.input}
+                placeholder="Enter your password"
+                secureTextEntry
+                value={formData.password}
+                onChangeText={(value) => handleChange('password', value)}
+            />
+            <Text style={styles.label}>Card ID</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Enter your password"
@@ -99,4 +99,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Register;
+export default AddBoughtForm;

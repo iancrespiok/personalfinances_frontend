@@ -1,11 +1,12 @@
 import React, { FC, useEffect } from 'react'
-import { FlatList, ScrollView, Text, View } from 'react-native'
+import { Button, FlatList, ScrollView, Text, View } from 'react-native'
 import TopBar from '../components/organisms/TopBar'
 import Item, { ItemProps } from '../components/atoms/Item'
 import PlusSVG from '../components/atoms/PlusSVG'
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { getService, getToken } from '../utils/getService'
+import { postService } from '../utils/postService'
 interface Props {
     navigation: any
 }
@@ -19,36 +20,18 @@ const HomeScreen: FC<Props> = () => {
         name: 'arroz',
         gasto: true,
         id: 0
-    },
-    {
-        cat: 'alquiler',
-        name: 'expesas',
-        gasto: true,
-        id: 1
-    },
-    {
-        cat: 'salud',
-        name: 'gym',
-        gasto: true,
-        id: 2
-    }
-        , {
-        cat: 'sueldo',
-        name: 'dinero',
-        gasto: false,
-        id: 3
     }
     ]
 
 
     useEffect(() => {
         navigation.navigate('Login')
-        // if (!getToken())
-        //     navigation.navigate('Login')
-        // else {
-        //     console.log('asasdas')
-        //     getService()
-        // }
+        if (!getToken())
+            navigation.navigate('Login')
+        else {
+            console.log('asasdas')
+            getService('categories')
+        }
     }, [navigation])
 
     const renderItem = ({ item }: { item: any }) => (
@@ -57,7 +40,23 @@ const HomeScreen: FC<Props> = () => {
         </View>
     );
 
+    const handleBoughtSubmit = () => {
+        const gasto = {
+            "description": "Gastos salud, gimnasio, medicos",
+            "categoryId": 1,
+            "date": "2024-08-23",
+            "amount": 100.00,
+            "userId": 1,
+            "installments": 3,
+            "cardId": 1
+        }
+        try {
+            postService(gasto, 'bought')
+        } catch (error) {
 
+        }
+
+    }
 
     return (
         <View style={{ width: 100 }}> {/* Asegura que ocupe toda la pantalla */}
@@ -68,6 +67,9 @@ const HomeScreen: FC<Props> = () => {
                 renderItem={renderItem}
                 keyExtractor={item => item.id.toString()}
             />
+
+
+            <Button onPress={() => (handleBoughtSubmit())}>Agregar gasto</Button>
         </View >
     );
 

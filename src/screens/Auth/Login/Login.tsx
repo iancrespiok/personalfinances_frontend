@@ -4,20 +4,14 @@ import axios from 'axios';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { postAuthService } from '../../../utils/postService';
 
 const Login = () => {
 
 
     const navigation = useNavigation()
 
-    // Guardar el token
-    const storeToken = async (token: any) => {
-        try {
-            await AsyncStorage.setItem('userToken', token);
-        } catch (error) {
-            console.error('Error storing the token', error);
-        }
-    };
+
 
 
     const [formData, setFormData] = useState({
@@ -33,9 +27,25 @@ const Login = () => {
         });
     };
 
+    // const handleSubmit = async () => {
+    //     try {
+    //         const response = await axios.post('http://localhost:8080/user/login', formData);
+    //         Alert.alert('Success', 'User registered successfully!');
+    //         console.log('Response:', response.data);
+    //         storeToken(response.data)
+    //         navigation.navigate('Home')
+    //         console.log('adssadas')
+    //         // Maneja la respuesta aquí, como redireccionar o limpiar el formulario
+    //     } catch (error) {
+    //         Alert.alert('Error', 'Something went wrong!');
+    //         console.error('Error:', error);
+    //         // Maneja el error aquí
+    //     }
+    // };
+
     const handleSubmit = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/user/login', formData);
+            const response = postAuthService(formData, 'user/login');
             Alert.alert('Success', 'User registered successfully!');
             console.log('Response:', response.data);
             storeToken(response.data)
@@ -48,6 +58,14 @@ const Login = () => {
             // Maneja el error aquí
         }
     };
+
+
+
+
+
+    const handleNavigate = (route: string) => {
+        navigation.navigate(route);
+    }
 
     return (
         <View style={styles.container}>
@@ -67,7 +85,8 @@ const Login = () => {
                 value={formData.password}
                 onChangeText={(value) => handleChange('password', value)}
             />
-            <Button title="Log in" onPress={handleSubmit} />
+            <Button title="Log in" onPress={() => handleSubmit} />
+            <Button title="Register" onPress={() => handleNavigate("Register")} />
         </View>
     );
 };
@@ -93,3 +112,14 @@ const styles = StyleSheet.create({
 });
 
 export default Login;
+
+
+// Guardar el token
+export const storeToken = async (token: any) => {
+    try {
+        // const jsonValue = JSON.stringify(token);
+        await AsyncStorage.setItem('userToken', token.jwt, () => { console.log('me setié') });
+    } catch (error) {
+        console.error('Error storing the token', error);
+    }
+};
