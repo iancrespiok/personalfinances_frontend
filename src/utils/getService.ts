@@ -10,7 +10,7 @@ export const getToken = async () => {
 };
 export const getService = async (endpoint: string) => {
   // Obtener el token
-  const urlBase = "http://localhost:8080/";
+  const urlBase = process.env.EXPO_PUBLIC_URLBASE; 
   const url = urlBase + endpoint;
   const token = await getToken();
   try {
