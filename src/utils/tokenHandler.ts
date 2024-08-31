@@ -1,17 +1,11 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getService, getToken } from "./getService"
 
-export const getToken = async () => {
-  try {
-    const token = await AsyncStorage.getItem("userToken");
-    return token;
-  } catch (error) {
-    return false;
-  }
-};
-export const getService = async (endpoint: string) => {
-  // Obtener el token
+export const  isValidToken = async (): Promise<boolean> => {
+
+
+      // Obtener el token
   const urlBase = "http://localhost:8080/";
-  const url = urlBase + endpoint;
+  const url = urlBase + 'categories';
   const token = await getToken();
   try {
     const response = await fetch(url, {
@@ -28,7 +22,10 @@ export const getService = async (endpoint: string) => {
 
     const data = await response.json();
     console.log(data);
+
+    return true
   } catch (error) {
     console.log("Error:", error);
+    return false
   }
-};
+  }
