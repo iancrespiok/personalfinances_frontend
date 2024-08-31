@@ -24,15 +24,6 @@ const HomeScreen: FC<Props> = () => {
     ]
 
 
-    useEffect(() => {
-        navigation.navigate('Login')
-        if (!getToken())
-            navigation.navigate('Login')
-        else {
-            console.log('asasdas')
-            getService('categories')
-        }
-    }, [navigation])
 
     const renderItem = ({ item }: { item: any }) => (
         <View style={{ backgroundColor: 'red' }}  >

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet } from 'react-native';
-import axios from 'axios';
 import { postAuthService } from '../../../utils/postService';
 import { useNavigation } from '@react-navigation/native';
 import { storeToken } from '../Login/Login';
@@ -31,7 +30,6 @@ const Register = () => {
         try {
             const response = await postAuthService(formData, 'user/register');
             Alert.alert('Success', 'User registered successfully!');
-            console.log('Response:', response.jwt, ' soy el tikce');
             storeToken(response.jwt)
             handleNavigate("Home");
             // Maneja la respuesta aquí, como redireccionar o limpiar el formulario

@@ -16,7 +16,6 @@ export const postAuthService = async (body: any, endpoint: string) => {
       },
     });
 
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(error);
