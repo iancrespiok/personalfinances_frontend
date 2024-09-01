@@ -1,23 +1,22 @@
 import { NavigationContainer } from "@react-navigation/native";
-import React, { FC } from "react";
+import React, { FC, useContext } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/HomeScreen";
 import Login from "../screens/Auth/Login/Login";
 import Register from "../screens/Auth/Register/Register";
 import AddBoughtForm from "../screens/Auth/AddBoughtForm/AddBoughtForm";
+import { AuthContext } from "../context/AuthContext";
 
 const AuthStack = createNativeStackNavigator();
 const AppStack = createNativeStackNavigator();
 
-interface RootNavigatorProps {
-    isSignedIn: boolean
-}
 
-const RootNavigator:FC<RootNavigatorProps> = ({isSignedIn}) => {
+const RootNavigator:FC = () => {
+  const { isAuthenticated } = useContext(AuthContext);
 
-  return (
+  return(
     <NavigationContainer>
-      {isSignedIn ? <AppStackScreen /> : <AuthStackScreen />}
+      {isAuthenticated ? <AppStackScreen /> : <AuthStackScreen />}
     </NavigationContainer>
   );
 };
