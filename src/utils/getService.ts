@@ -1,19 +1,13 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import getToken from "./getToken";
 
-export const getToken = async () => {
-  try {
-    const token = await AsyncStorage.getItem("userToken");
-    return token;
-  } catch (error) {
-    return false;
-  }
-};
-export const getService = async (endpoint: string) => {
+const getService = async (endpoint: string) => {
   // Obtener el token
-  const urlBase = process.env.EXPO_PUBLIC_URLBASE; 
+  const urlBase = process.env.EXPO_PUBLIC_URLBASE;
   const url = urlBase + endpoint;
   const token = await getToken();
-  console.log(token);
+
+  console.log("Token:",token);
+
   try {
     const response = await fetch(url, {
       method: "GET",
@@ -33,3 +27,5 @@ export const getService = async (endpoint: string) => {
     console.log("Error:", error);
   }
 };
+
+export default getService;

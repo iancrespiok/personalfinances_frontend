@@ -50,7 +50,6 @@ const Login = () => {
             console.log('Response:', response.data);
             storeToken(response.data)
             navigation.navigate('Home')
-            console.log('adssadas')
             // Maneja la respuesta aquí, como redireccionar o limpiar el formulario
         } catch (error) {
             Alert.alert('Error', 'Something went wrong!');

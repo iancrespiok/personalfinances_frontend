@@ -1,20 +1,18 @@
 import React, { FC, useEffect } from 'react'
-import { Button, FlatList, ScrollView, Text, View } from 'react-native'
-import TopBar from '../components/organisms/TopBar'
-import Item, { ItemProps } from '../components/atoms/Item'
-import PlusSVG from '../components/atoms/PlusSVG'
+import { Button, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { getService, getToken } from '../utils/getService'
+import { getService } from '../utils/getService'
+import getToken from '../utils/getToken'
 import { postService } from '../utils/postService'
+import FlatListRender from '../components/organisms/FlatListRender'
+
 interface Props {
     navigation: any
 }
 const HomeScreen: FC<Props> = () => {
 
-
-
     const navigation = useNavigation()
+
     const data = [{
         cat: 'mercado',
         name: 'arroz',
@@ -23,22 +21,15 @@ const HomeScreen: FC<Props> = () => {
     }
     ]
 
-
     useEffect(() => {
         navigation.navigate('Login')
         if (!getToken())
             navigation.navigate('Login')
         else {
-            console.log('asasdas')
             getService('categories')
         }
     }, [navigation])
 
-    const renderItem = ({ item }: { item: any }) => (
-        <View style={{ backgroundColor: 'red' }}  >
-            <Text >{item.cat}</Text>
-        </View>
-    );
 
     const handleBoughtSubmit = () => {
         const gasto = {
@@ -62,13 +53,9 @@ const HomeScreen: FC<Props> = () => {
         <View style={{ width: 100 }}> {/* Asegura que ocupe toda la pantalla */}
             {/* <TopBar /> */}
             {/* <Text>Ultimos movimientos</Text> */}
-            <FlatList
-                data={data}
-                renderItem={renderItem}
-                keyExtractor={item => item.id.toString()}
+            <FlatListRender
+                dataRender={data}
             />
-
-
             <Button onPress={() => (handleBoughtSubmit())}>Agregar gasto</Button>
         </View >
     );
