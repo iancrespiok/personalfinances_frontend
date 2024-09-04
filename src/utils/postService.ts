@@ -1,26 +1,37 @@
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 import { getToken } from "./getService";
 
-/**
- *
- * @param body Require to add to the request
- * @param endpoint url
- */
-export const postAuthService = async (body: any, endpoint: string) => {
-  const baseUrl = "http://localhost:8080/";
-  const url = baseUrl + endpoint;
 
-  try {
-    const response = await axios.post(url, body, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+// useAuthService.ts
 
-    console.log(response.data);
-    return response.data;
-  } catch (error) {
-    console.error(error);
-  }
+export const useAuthService = () => {
+  const { storeToken, setIsAuthenticated } = useContext(AuthContext);
+
+  const postAuthService = async (body: any, endpoint: string) => {
+    const baseUrl = 'http://localhost:8080/';
+    const url = baseUrl + endpoint;
+
+    try {
+      const response = await axios.post(url, body, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const token = response.data.jwt;
+      if (token) {
+        await storeToken(token);
+        setIsAuthenticated(true);
+      }
+
+      return response.data;
+    } catch (error) {
+      console.error('Error posting to auth service:', error);
+      throw error; // Puedes manejar el error como consideres necesario
+    }
+  };
+
+  return { postAuthService };
 };
 
 import axios from "axios";

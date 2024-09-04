@@ -21,14 +21,6 @@ const HomeScreen: FC<Props> = () => {
     }
     ]
 
-    useEffect(() => {
-        navigation.navigate('Login')
-        if (!getToken())
-            navigation.navigate('Login')
-        else {
-            getService('categories')
-        }
-    }, [navigation])
 
 
     const handleBoughtSubmit = () => {
