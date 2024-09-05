@@ -1,11 +1,9 @@
-import { getService, getToken } from "./getService"
+import getToken from "./getToken";
 
-export const  isValidToken = async (): Promise<boolean> => {
-
-
-      // Obtener el token
-  const urlBase = "http://localhost:8080/";
-  const url = urlBase + 'categories';
+export const isValidToken = async (): Promise<boolean> => {
+  // Obtener el token
+  const urlBase = process.env.EXPO_PUBLIC_URLBASE;
+  const url = urlBase + "categories";
   const token = await getToken();
   try {
     const response = await fetch(url, {
@@ -23,9 +21,9 @@ export const  isValidToken = async (): Promise<boolean> => {
     const data = await response.json();
     console.log(data);
 
-    return true
+    return true;
   } catch (error) {
     console.log("Error:", error);
-    return false
+    return false;
   }
-  }
+};
