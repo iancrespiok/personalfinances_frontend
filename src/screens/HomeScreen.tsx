@@ -1,9 +1,9 @@
-import React, { FC } from 'react'
-import { GestureResponderEvent, View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import React, { FC, useState } from 'react'
+import {  View, StyleSheet, Switch } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { postService } from '../utils/postService'
-import FlatListRender from '../components/organisms/FlatListRender'
 import dataTest from '../utils/dataTest.json'
+import { FlatListRender } from '../components/organisms'
+
 
 
 interface Props {
@@ -11,61 +11,47 @@ interface Props {
 }
 const HomeScreen: FC<Props> = () => {
 
+
     const navigation = useNavigation()
+    const [isDarkTheme, setisDarkTheme] = useState(false);
+    const toggleSwitch = () => {
+        setisDarkTheme(!isDarkTheme);
+    };
 
-    // const handleBoughtSubmit = (event: GestureResponderEvent): void => {
-    //     const spent = {
-    //         "description": "Gastos salud, gimnasio, medicos",
-    //         "categoryId": 1,
-    //         "date": "2024-08-23",
-    //         "amount": 100.00,
-    //         "userId": 1,
-    //         "installments": 3,
-    //         "cardId": 1
-    //     }
-    //     try {
-    //         postService(spent, 'bought')
-    //     } catch (error) {
-    //         throw new Error("Error in handleBoughtSubmit");
-    //     }
-
-    // }
+    const styles = createStyles(isDarkTheme);
 
     return (
         <View style={styles.container}>
-            <View style={styles.topBar}>
-                <Text style={styles.title}>Transaction History</Text>
-                <TouchableOpacity>
-                    <Text style={styles.buttonSeeAll}>See All</Text>
-                </TouchableOpacity>
-            </View>
+            {/**Switch para probar modos de colores */}
+            <Switch
+                trackColor={{ false: '#767577', true: '#81b0ff' }}
+                thumbColor={isDarkTheme ? '#f5dd4b' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={isDarkTheme}
+            />
             <FlatListRender
                 dataRender={dataTest}
+                theme={isDarkTheme}
             />
-            {/* <Button onPress={handleBoughtSubmit}>Agregar gasto</Button> */}
         </View >
     );
 
 }
 
+
+
+const createStyles = (isDarkTheme: boolean) =>
+    StyleSheet.create({
+        container: {
+            width: 500,
+            backgroundColor: isDarkTheme ? '#1E1E1E' : '#F9F9F9',
+        },
+        darkMode:{
+            backgroundColor: 'black',
+        }
+
+    })
+    
+
 export default HomeScreen
-
-const styles = StyleSheet.create({
-    container: {
-        width: 500,
-        backgroundColor: 'gray',
-    },
-    topBar: {
-        flex: 1,
-        margin:10,
-        flexDirection:'row',
-        justifyContent: 'space-between',
-        
-    },
-    title: {
-
-    },
-    buttonSeeAll: {
-
-    },
-})
