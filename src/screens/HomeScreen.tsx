@@ -1,27 +1,22 @@
-import React, { FC, useEffect } from 'react'
-import { Button, FlatList, ScrollView, Text, View } from 'react-native'
-import TopBar from '../components/organisms/TopBar'
-import Item, { ItemProps } from '../components/atoms/Item'
-import PlusSVG from '../components/atoms/PlusSVG'
+import React, { FC, useState } from 'react'
+import {  View, StyleSheet, Switch } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { getService, getToken } from '../utils/getService'
-import { postService } from '../utils/postService'
+import dataTest from '../utils/dataTest.json'
+import { FlatListRender } from '../components/organisms'
+
+
+
 interface Props {
     navigation: any
 }
 const HomeScreen: FC<Props> = () => {
 
 
-
     const navigation = useNavigation()
-    const data = [{
-        cat: 'mercado',
-        name: 'arroz',
-        gasto: true,
-        id: 0
-    }
-    ]
+    const [isDarkTheme, setisDarkTheme] = useState(false);
+    const toggleSwitch = () => {
+        setisDarkTheme(!isDarkTheme);
+    };
 
 
 
@@ -50,20 +45,37 @@ const HomeScreen: FC<Props> = () => {
     }
 
     return (
-        <View style={{ width: 100 }}> {/* Asegura que ocupe toda la pantalla */}
-            {/* <TopBar /> */}
-            {/* <Text>Ultimos movimientos</Text> */}
-            <FlatList
-                data={data}
-                renderItem={renderItem}
-                keyExtractor={item => item.id.toString()}
+        <View style={styles.container}>
+            {/**Switch para probar modos de colores */}
+            <Switch
+                trackColor={{ false: '#767577', true: '#81b0ff' }}
+                thumbColor={isDarkTheme ? '#f5dd4b' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={isDarkTheme}
             />
-
-
-            <Button onPress={() => (handleBoughtSubmit())}>Agregar gasto</Button>
+            <FlatListRender
+                dataRender={dataTest}
+                theme={isDarkTheme}
+            />
         </View >
     );
 
 }
+
+
+
+const createStyles = (isDarkTheme: boolean) =>
+    StyleSheet.create({
+        container: {
+            width: 500,
+            backgroundColor: isDarkTheme ? '#1E1E1E' : '#F9F9F9',
+        },
+        darkMode:{
+            backgroundColor: 'black',
+        }
+
+    })
+    
 
 export default HomeScreen

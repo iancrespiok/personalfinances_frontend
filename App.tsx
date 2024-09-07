@@ -1,10 +1,7 @@
-import React, { FC, useContext, useState } from "react"
-import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, Button, StyleSheet, Text, View } from 'react-native';
-import CategoryForm from "./src/components/organisms/CategoryForm";
-import Routes from "./src/routes/Routes";
-import { AuthContext, AuthProvider } from "./src/context/AuthContext";
+import React, { FC, useContext } from "react"
+import {  ActivityIndicator, View } from 'react-native';
 import RootNavigator from "./src/routes/Routes";
+import { AuthContext, AuthProvider } from "./src/context/AuthContext";
 
 export default function App() {
 

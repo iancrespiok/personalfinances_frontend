@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { getToken } from "./getService";
+import getToken from "./getToken";
 
 
 // useAuthService.ts
@@ -9,7 +9,7 @@ export const useAuthService = () => {
   const { storeToken, setIsAuthenticated } = useContext(AuthContext);
 
   const postAuthService = async (body: any, endpoint: string) => {
-    const baseUrl = 'http://localhost:8080/';
+    const baseUrl = process.env.EXPO_PUBLIC_URLBASE;
     const url = baseUrl + endpoint;
 
     try {
@@ -37,7 +37,7 @@ export const useAuthService = () => {
 import axios from "axios";
 
 export const postService = async (body: any, endpoint: string) => {
-  const baseUrl = "http://localhost:8080/";
+  const baseUrl = process.env.EXPO_PUBLIC_URLBASE;
   const url = baseUrl + endpoint;
   const token = await getToken();
 
