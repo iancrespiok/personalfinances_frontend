@@ -18,7 +18,31 @@ const HomeScreen: FC<Props> = () => {
         setisDarkTheme(!isDarkTheme);
     };
 
-    const styles = createStyles(isDarkTheme);
+
+
+    const renderItem = ({ item }: { item: any }) => (
+        <View style={{ backgroundColor: 'red' }}  >
+            <Text >{item.cat}</Text>
+        </View>
+    );
+
+    const handleBoughtSubmit = () => {
+        const gasto = {
+            "description": "Gastos salud, gimnasio, medicos",
+            "categoryId": 1,
+            "date": "2024-08-23",
+            "amount": 100.00,
+            "userId": 1,
+            "installments": 3,
+            "cardId": 1
+        }
+        try {
+            postService(gasto, 'bought')
+        } catch (error) {
+
+        }
+
+    }
 
     return (
         <View style={styles.container}>
