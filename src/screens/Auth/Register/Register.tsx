@@ -1,7 +1,6 @@
 import React, {  useState } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet } from 'react-native';
-import { useAuthService } from '../../../utils/postService';
-
+import { useAuthService } from '../../../hooks/useAuthService';
 
 const Register = () => {
 
