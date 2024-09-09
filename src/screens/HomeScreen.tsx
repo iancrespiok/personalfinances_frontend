@@ -1,62 +1,28 @@
-import React, { FC, useState } from 'react'
-import {  View, StyleSheet, Switch } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import React, { FC, useEffect, useState } from 'react'
+import { View, StyleSheet, Switch } from 'react-native'
 import dataTest from '../utils/dataTest.json'
-import { FlatListRender } from '../components/organisms'
-
-
+import TransactionHistory from '../components/organisms/TransactionHistory/TransactionHistory'
+import { Dimensions } from 'react-native'
+import getService from '../utils/getService'
 
 interface Props {
     navigation: any
 }
 const HomeScreen: FC<Props> = () => {
+    const { width } = Dimensions.get('window');
+    const styles = createStyles(width);
 
 
-    const navigation = useNavigation()
-    const [isDarkTheme, setisDarkTheme] = useState(false);
-    const toggleSwitch = () => {
-        setisDarkTheme(!isDarkTheme);
-    };
-
-
-
-    const renderItem = ({ item }: { item: any }) => (
-        <View style={{ backgroundColor: 'red' }}  >
-            <Text >{item.cat}</Text>
-        </View>
-    );
-
-    const handleBoughtSubmit = () => {
-        const gasto = {
-            "description": "Gastos salud, gimnasio, medicos",
-            "categoryId": 1,
-            "date": "2024-08-23",
-            "amount": 100.00,
-            "userId": 1,
-            "installments": 3,
-            "cardId": 1
-        }
-        try {
-            postService(gasto, 'bought')
-        } catch (error) {
-
-        }
-
-    }
+    // useEffect(() => {
+    //     getService('moneyFlows')
+    //         .then((data) => console.log("Test", data))
+    
+    //     }, []);
 
     return (
         <View style={styles.container}>
-            {/**Switch para probar modos de colores */}
-            <Switch
-                trackColor={{ false: '#767577', true: '#81b0ff' }}
-                thumbColor={isDarkTheme ? '#f5dd4b' : '#f4f3f4'}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitch}
-                value={isDarkTheme}
-            />
-            <FlatListRender
+            <TransactionHistory
                 dataRender={dataTest}
-                theme={isDarkTheme}
             />
         </View >
     );
@@ -64,18 +30,19 @@ const HomeScreen: FC<Props> = () => {
 }
 
 
+const createStyles = (width: number) => StyleSheet.create({
+    container: {
+        width: width,
+        backgroundColor: 'white',
+    },
+    darkMode: {
+        backgroundColor: 'black',
+    }
 
-const createStyles = (isDarkTheme: boolean) =>
-    StyleSheet.create({
-        container: {
-            width: 500,
-            backgroundColor: isDarkTheme ? '#1E1E1E' : '#F9F9F9',
-        },
-        darkMode:{
-            backgroundColor: 'black',
-        }
+})
 
-    })
-    
+
 
 export default HomeScreen
+
+
