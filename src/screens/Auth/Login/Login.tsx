@@ -13,8 +13,8 @@ const Login = () => {
 
     const [formData, setFormData] = useState({
 
-        email: 'emanuelconstancio@gmail.com',
-        password: '123456Emanuel'
+        email: 'test@gmail.com',
+        password: 'Password1.'
     });
 
     const handleChange = (name: string, value: string) => {

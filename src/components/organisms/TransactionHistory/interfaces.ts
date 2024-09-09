@@ -8,5 +8,5 @@ type Item = {
 
 export type Props = {
     dataRender: Item[];
-    theme: boolean;
 }
+
