@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useToken } from "../hooks/useToken";
+import useToken from "./useToken";
 
 const useGetService = (endpoint: string) => {
   const [data, setData] = useState<any>([]);
@@ -13,8 +13,8 @@ const useGetService = (endpoint: string) => {
   const getService = async () => {
     try {
       setLoading(true);
-      const { token, error: tokenError } = await useToken();
-      if (tokenError) {
+      const { token, loading, error } = useToken();
+      if (error) {
         setError(true);
       }
       const urlBase = process.env.EXPO_PUBLIC_URLBASE;
@@ -22,8 +22,8 @@ const useGetService = (endpoint: string) => {
       const response = await fetch(url, {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${token}`, 
-          "Content-Type": "application/json", 
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
       });
 

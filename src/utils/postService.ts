@@ -1,12 +1,12 @@
-import getToken from "./getToken";
+import useToken from "../hooks/useToken";
 import axios from "axios";
 
 
 export const postService = async (body: any, endpoint: string) => {
   const baseUrl = process.env.EXPO_PUBLIC_URLBASE;
   const url = baseUrl + endpoint;
-  const token = await getToken();
-
+  const {token} = useToken();
+  
   try {
     const response = await axios.post(url, body, {
       headers: {
