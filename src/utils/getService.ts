@@ -2,7 +2,8 @@ import getToken from "./getToken";
 
 const getService = async (endpoint: string) => {
   // Obtener el token
-  const urlBase = process.env.EXPO_PUBLIC_URLBASE; 
+  // const urlBase = process.env.EXPO_PUBLIC_URLBASE; 
+  const urlBase = 'http://localhost:8080' 
   const url = urlBase + endpoint;
   const token = await getToken();
   try {
@@ -20,9 +21,11 @@ const getService = async (endpoint: string) => {
 
     const data = await response.json();
     console.log(data);
+    return data;
   } catch (error) {
     console.log("Error:", error);
+    return [{}]
   }
 };
 
-export default getService;
+

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useDebugValue } from "react";
 import { AuthContext } from "../context/AuthContext";
 import getToken from "./getToken";
 
@@ -11,7 +11,6 @@ export const useAuthService = () => {
   const postAuthService = async (body: any, endpoint: string) => {
     const baseUrl = process.env.EXPO_PUBLIC_URLBASE;
     const url = baseUrl + endpoint;
-
     try {
       const response = await axios.post(url, body, {
         headers: {
@@ -19,6 +18,7 @@ export const useAuthService = () => {
         },
       });
       const token = response.data.jwt;
+   
       if (token) {
         await storeToken(token);
         setIsAuthenticated(true);
@@ -31,6 +31,7 @@ export const useAuthService = () => {
     }
   };
 
+
   return { postAuthService };
 };
 
@@ -40,9 +41,10 @@ export const postService = async (body: any, endpoint: string) => {
   const baseUrl = process.env.EXPO_PUBLIC_URLBASE;
   const url = baseUrl + endpoint;
   const token = await getToken();
-
+  console.log(token, 'soy token')
   try {
     const response = await axios.post(url, body, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

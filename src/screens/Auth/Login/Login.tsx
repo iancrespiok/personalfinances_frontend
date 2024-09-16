@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
-import { useAuthService } from '../../../utils/postService';
+import { postService, useAuthService } from '../../../utils/postService';
 
 const Login = () => {
 
     const navigation = useNavigation()
     const { postAuthService } = useAuthService()
-
 
 
     const [formData, setFormData] = useState({

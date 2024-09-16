@@ -4,7 +4,7 @@ import RootNavigator from "./src/routes/Routes";
 import { AuthContext, AuthProvider } from "./src/context/AuthContext";
 
 export default function App() {
-
+  
   return ( 
     <AuthProvider>
         <LoaderSession />  
