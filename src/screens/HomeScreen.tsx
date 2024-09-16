@@ -1,17 +1,17 @@
-import React, { FC, useEffect, useState } from 'react'
-import { View, StyleSheet, Switch } from 'react-native'
+import React, { FC } from 'react'
+import { View, StyleSheet } from 'react-native'
 import TransactionHistory from '../components/organisms/TransactionHistory/TransactionHistory'
 import { Dimensions } from 'react-native'
 import useGetService from '../hooks/useGetService'
 
 interface Props {
-    navigation: any
+    navigation: string
 }
 const HomeScreen: FC<Props> = () => {
 
     const { width } = Dimensions.get('window');
     const styles = createStyles(width);
-    const { data, loading, error } = useGetService("moneyflows");
+    const { data } = useGetService("moneyflows");
 
     return (
         <View style={styles.container}>

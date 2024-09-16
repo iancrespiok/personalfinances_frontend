@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import useToken from "./useToken";
 
 const useGetService = (endpoint: string) => {
-  const [data, setData] = useState<any>([]);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
 
@@ -13,7 +13,7 @@ const useGetService = (endpoint: string) => {
   const getService = async () => {
     try {
       setLoading(true);
-      const { token, loading, error } = useToken();
+      const { token, error } = useToken();
       if (error) {
         setError(true);
       }
@@ -32,7 +32,7 @@ const useGetService = (endpoint: string) => {
       }
       const responseData = await response.json();
       setData(responseData);
-    } catch (error) {
+    } catch {
       setError(true);
     } finally {
       setLoading(false);

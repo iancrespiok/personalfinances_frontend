@@ -1,4 +1,4 @@
-type Item = {
+type TransactionItem = {
     cat: string;
     name: string;
     spent: boolean;
@@ -7,6 +7,6 @@ type Item = {
 }
 
 export type Props = {
-    dataRender: Item[];
+    dataRender: TransactionItem[];
 }
 

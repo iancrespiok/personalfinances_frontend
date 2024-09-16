@@ -4,11 +4,13 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import createStyles from './styles';
 import { Props } from './interfaces';
 
+
+
 const TransactionHistory: FC<Props> = ({ dataRender }) => {
     
     const styles = createStyles();
 
-        const renderItem = ({ item }: { item: any }) => (
+        const renderItem = ({ item }: { item: dataRender }) => (
             <View style={styles.container}>
                 <View style={styles.spent}>
                     {item.spent ? <MaterialCommunityIcons name="arrow-bottom-left-thin-circle-outline" size={30} color="#358DF5" style={styles.arrowLeftBottom} /> : <MaterialCommunityIcons name="arrow-bottom-right-thin-circle-outline" size={24} color="black" style={styles.arrowRightBottom} />}

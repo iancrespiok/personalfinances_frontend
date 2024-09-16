@@ -25,6 +25,7 @@
     },
     "plugins": [
       [
+        "react-hooks",
         "expo-font",
         {
           "fonts": [
